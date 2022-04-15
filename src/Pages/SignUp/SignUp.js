@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SignUp.css'
 import logo from '../../Images/logo2.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 
@@ -17,6 +17,8 @@ const SignUp = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
 
+    const navigate = useNavigate()
+
     const handleEmail = e => {
         setEmail(e.target.value)
     }
@@ -31,7 +33,10 @@ const SignUp = () => {
         return <h1 className='d-flex justify-content-center align-items-center h-100'>Loading...</h1>
     }
     if (error) {
-        setErrorElement(error)
+        setErrorElement(error.message)
+    }
+    if (user) {
+        navigate('/login')
     }
 
     const handleSubmit = e => {
@@ -54,7 +59,6 @@ const SignUp = () => {
                     <br />
                     <input onBlur={handleConfirmPassword} type="password" name="password" id="" placeholder='Confirm Password' required />
                     <br />
-                    {error}
                     <input className='SignUp' type="submit" value="Sign Up" />
                 </form>
             </div>
