@@ -1,0 +1,5 @@
+.b-card:hover {
+    border-radius: 10px;
+    transition: 0.5s;
+    box-shadow: 1px 1px 10px gray;
+}
